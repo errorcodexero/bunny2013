@@ -9,7 +9,7 @@ class OI;
 #include <WPILib.h>
 #include "Robot.h"
 
-// #define PRACTICE_OI
+#define PRACTICE_OI
 
 class DSAnalogInput {
 private:
@@ -99,8 +99,6 @@ private:
 
     DSAnalogInput* m_pAutoSelect;
 
-    DSDigitalInput* m_pDriverSelect;
-
     // aiming
     class TimedDrive* m_pNudgeLeft;
     class TimedDrive* m_pNudgeRight;
@@ -119,7 +117,7 @@ public:
     DriverStationEnhancedIO* GetEIO() { return m_pEIO; }
     DriverStationLCD* GetLCD() { return m_pLCD; }
     float GetX() { return m_pStick->GetRawAxis( 1 ); } 
-    float GetY() { return m_pStick->GetRawAxis( m_pDriverSelect->Get() ? 5 : 2 ); } 
+    float GetY() { return m_pStick->GetRawAxis( 2 ); } 
     float GetThrottle() { return m_pStick->GetRawAxis( 3 ); } 
     float GetTwist() { return m_pStick->GetRawAxis( 4 ); } 
     int GetAuto() { return m_pAutoSelect->GetDigital(10); }

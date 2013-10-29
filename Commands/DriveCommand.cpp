@@ -35,12 +35,12 @@ void DriveCommand::Execute()
 //  then = now;
 
     float throttle = (1.0 - Robot::oi()->GetThrottle())/2.0;
-    float x = Robot::oi()->GetX() * throttle;
-    float y = Robot::oi()->GetY() * throttle;
+    float x = Robot::oi()->GetX();
+    float y = Robot::oi()->GetY();
     float t = Robot::oi()->GetTwist();
-//  printf("%g %g %g\n", x, y, t);
+//  printf("%g %g %g %g\n", x, y, throttle, t);
 
-    Robot::driveBase()->Drive(x, y, t);
+    Robot::driveBase()->Drive(x * throttle, y * throttle, t);
 }
 
 // Make this return true when this Command no longer needs to run execute()

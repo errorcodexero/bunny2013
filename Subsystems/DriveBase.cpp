@@ -30,6 +30,8 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     lw->AddActuator("DriveBase", "BackRight", dynamic_cast<Victor*>(m_back_right));
 
     m_drive = new RobotDrive(m_front_left, m_back_left, m_front_right, m_back_right);
+    m_drive->SetInvertedMotor(RobotDrive::kFrontRightMotor, true);
+    m_drive->SetInvertedMotor(RobotDrive::kRearRightMotor, true);
 
     m_gyro = new RateGyro(1, gyroAnalogChannel);
     lw->AddSensor("DriveBase", "Gyro", m_gyro);
@@ -126,6 +128,6 @@ void DriveBase::Drive( float x, float y, float twist )
     if (twist < -1.0) twist = -1.0;
     if (twist > 1.0) twist = 1.0;
 
-    m_drive->HolonomicDrive( x, y, twist );
+    m_drive->MecanumDrive_Cartesian( x, y, twist, 0.0 );
 }
 

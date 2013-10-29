@@ -31,16 +31,6 @@ OI::OI()
 
     // digital inputs
 
-#ifdef PRACTICE_OI
-    m_pDriverSelect       = new DSDigitalInput(m_pEIO, 3,
-				    DriverStationEnhancedIO::kInputPullUp,
-				    false);	// active-low toggle
-#else // COMPETITION_OI
-    m_pDriverSelect       = new DSDigitalInput(m_pEIO, 3,
-				    DriverStationEnhancedIO::kInputPullUp,
-				    true);	// active-high toggle
-#endif
-
 }
 
 OI::~OI()
@@ -56,7 +46,6 @@ OI::~OI()
     delete m_pGamepadBack;
     delete m_pGamepadStart;
     delete m_pAutoSelect;
-    delete m_pDriverSelect;
 
     // initialized in Initialize()
     if (m_pNudgeLeft) delete m_pNudgeLeft;
