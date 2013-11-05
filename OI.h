@@ -117,7 +117,9 @@ public:
     DriverStationEnhancedIO* GetEIO() { return m_pEIO; }
     DriverStationLCD* GetLCD() { return m_pLCD; }
     float GetX() { return m_pStick->GetRawAxis( 1 ); } 
-    float GetY() { return m_pStick->GetRawAxis( 2 ); } 
+    // Windows joysticks return y = -1.0 when pushed forward.
+    // We prefer to think of forward motion as y = +1.0
+    float GetY() { return -m_pStick->GetRawAxis( 2 ); } 
     float GetThrottle() { return m_pStick->GetRawAxis( 3 ); } 
     float GetTwist() { return m_pStick->GetRawAxis( 4 ); } 
     int GetAuto() { return m_pAutoSelect->GetDigital(10); }

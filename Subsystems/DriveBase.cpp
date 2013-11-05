@@ -128,6 +128,10 @@ void DriveBase::Drive( float x, float y, float twist )
     if (twist < -1.0) twist = -1.0;
     if (twist > 1.0) twist = 1.0;
 
-    m_drive->MecanumDrive_Cartesian( x, y, twist, 0.0 );
+    // RobotDrive was designed to work with joysticks that generate
+    // y = -1.0 for forward motion.  We prefer to think of forward
+    // motion as y = +1.0.  Change the sign here (and also at the
+    // point in the OI where we read the joystick!)
+    m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );
 }
 

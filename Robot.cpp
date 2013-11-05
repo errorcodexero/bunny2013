@@ -47,13 +47,9 @@ void Robot::RobotInit()
 
     m_oi->Initialize();
 
-    // tune system parameters
-
-    Preferences *pref = Preferences::GetInstance();
-
     // Now that everything else is set up, start the compressor
-    m_compressor->Start();
 
+    m_compressor->Start();
     SmartDashboard::PutData("scheduler", Scheduler::GetInstance());
 }
 
