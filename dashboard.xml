@@ -1,151 +1,111 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="STEP 5 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="833" y="280"/>
-	</widget>
-	<widget field="STEP 5 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="826" y="260"/>
-	</widget>
-	<widget field="STEP 4 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="833" y="180"/>
-	</widget>
-	<widget field="STEP 4 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="826" y="160"/>
-	</widget>
-	<widget field="STEP 3 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="833" y="80"/>
-	</widget>
-	<widget field="STEP 3 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="826" y="60"/>
-	</widget>
-	<widget field="STEP 2 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="673" y="280"/>
-	</widget>
-	<widget field="STEP 2 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="666" y="260"/>
-	</widget>
-	<widget field="STEP 1 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="673" y="180"/>
-	</widget>
-	<widget field="STEP 1 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="666" y="160"/>
-	</widget>
-	<widget field="STEP 0 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="673" y="80"/>
-	</widget>
-	<widget field="STEP 0 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="666" y="60"/>
-	</widget>
 	<widget field="AUTO PATTERN" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
-		<location x="784" y="379"/>
+		<location x="323" y="324"/>
 		<width>93</width>
 		<property name="Background" value="255.255.153.255"/>
 	</widget>
 	<widget field="scheduler" type="Scheduler" class="edu.wpi.first.smartdashboard.gui.elements.Scheduler">
-		<location x="496" y="360"/>
+		<location x="16" y="285"/>
 	</widget>
 	<widget field="Reset Robot" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="22" y="0"/>
 	</widget>
 	<widget field="Rotate time" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="18" y="360"/>
+		<location x="13" y="218"/>
 	</widget>
 	<widget field="Rotate Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="32" y="320"/>
+		<location x="26" y="163"/>
 	</widget>
 	<widget field="Rotate X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="32" y="300"/>
+		<location x="26" y="138"/>
 	</widget>
 	<widget field="Rotate T" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="32" y="340"/>
+		<location x="26" y="190"/>
 	</widget>
 	<widget field="Rotate Rev" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="27" y="260"/>
+		<location x="24" y="100"/>
 	</widget>
 	<widget field="Rotate Fwd" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="26" y="227"/>
+		<location x="25" y="69"/>
+	</widget>
+	<widget field="STEP 0 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="273" y="80"/>
+	</widget>
+	<widget field="STEP 0 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="266" y="60"/>
 	</widget>
 	<widget field="STEP 0 X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="692" y="20"/>
+		<location x="292" y="20"/>
 	</widget>
 	<widget field="STEP 0 Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="692" y="40"/>
+		<location x="292" y="40"/>
+	</widget>
+	<widget field="STEP 1 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="273" y="180"/>
+	</widget>
+	<widget field="STEP 1 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="266" y="160"/>
 	</widget>
 	<widget field="STEP 1 X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="692" y="120"/>
+		<location x="292" y="120"/>
 	</widget>
 	<widget field="STEP 1 Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="692" y="140"/>
+		<location x="292" y="140"/>
+	</widget>
+	<widget field="STEP 2 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="273" y="280"/>
+	</widget>
+	<widget field="STEP 2 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="266" y="260"/>
 	</widget>
 	<widget field="STEP 2 X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="692" y="220"/>
+		<location x="292" y="220"/>
 	</widget>
 	<widget field="STEP 2 Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="692" y="240"/>
+		<location x="292" y="240"/>
+	</widget>
+	<widget field="STEP 3 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="433" y="80"/>
+	</widget>
+	<widget field="STEP 3 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="426" y="60"/>
 	</widget>
 	<widget field="STEP 3 X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="852" y="20"/>
+		<location x="452" y="20"/>
 	</widget>
 	<widget field="STEP 3 Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="852" y="40"/>
+		<location x="452" y="40"/>
+	</widget>
+	<widget field="STEP 4 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="433" y="180"/>
+	</widget>
+	<widget field="STEP 4 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="426" y="160"/>
 	</widget>
 	<widget field="STEP 4 X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="852" y="120"/>
+		<location x="452" y="120"/>
 	</widget>
 	<widget field="STEP 4 Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="852" y="140"/>
+		<location x="452" y="140"/>
+	</widget>
+	<widget field="STEP 5 SECS" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="433" y="280"/>
+	</widget>
+	<widget field="STEP 5 TWIST" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="426" y="260"/>
 	</widget>
 	<widget field="STEP 5 X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="852" y="220"/>
+		<location x="452" y="220"/>
 	</widget>
 	<widget field="STEP 5 Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="852" y="240"/>
+		<location x="452" y="240"/>
 	</widget>
 	<widget field="AUTO SAVE" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="760" y="320"/>
+		<location x="442" y="319"/>
 	</widget>
 </dashboard>
 <live-window>
-	<widget field="DriverStation" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Battery" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="16"/>
-			<height>20</height>
-			<width>100</width>
-		</widget>
-		<location x="7" y="5"/>
-		<width>112</width>
-		<height>43</height>
-	</widget>
-	<widget field="DriveBase" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Gyro" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="16"/>
-			<height>37</height>
-			<width>293</width>
-		</widget>
-		<widget field="FrontLeft" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="53"/>
-			<height>63</height>
-			<width>293</width>
-		</widget>
-		<widget field="BackLeft" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="116"/>
-			<height>63</height>
-			<width>293</width>
-		</widget>
-		<widget field="FrontRight" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="179"/>
-			<height>63</height>
-			<width>293</width>
-		</widget>
-		<widget field="BackRight" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="242"/>
-			<height>63</height>
-			<width>293</width>
-		</widget>
-		<location x="7" y="90"/>
-		<width>305</width>
-		<height>312</height>
-	</widget>
 	<widget field="Compressor" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
 		<widget field="PressureSwitch" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
 			<location x="6" y="16"/>
@@ -160,6 +120,46 @@
 		<location x="123" y="5"/>
 		<width>179</width>
 		<height>63</height>
+	</widget>
+	<widget field="DriverStation" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="Battery" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="16"/>
+			<height>20</height>
+			<width>100</width>
+		</widget>
+		<location x="7" y="5"/>
+		<width>112</width>
+		<height>43</height>
+	</widget>
+	<widget field="DriveBase" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="Gyro" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="16"/>
+			<height>31</height>
+			<width>293</width>
+		</widget>
+		<widget field="FrontLeft" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="47"/>
+			<height>57</height>
+			<width>293</width>
+		</widget>
+		<widget field="BackLeft" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="104"/>
+			<height>57</height>
+			<width>293</width>
+		</widget>
+		<widget field="FrontRight" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="161"/>
+			<height>57</height>
+			<width>293</width>
+		</widget>
+		<widget field="BackRight" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="218"/>
+			<height>57</height>
+			<width>293</width>
+		</widget>
+		<location x="6" y="74"/>
+		<width>305</width>
+		<height>283</height>
 	</widget>
 </live-window>
 </xml>
