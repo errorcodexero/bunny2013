@@ -122,7 +122,11 @@ public:
     float GetY() { return -m_pStick->GetRawAxis( 2 ); } 
     float GetThrottle() { return m_pStick->GetRawAxis( 3 ); } 
     float GetTwist() { return m_pStick->GetRawAxis( 4 ); } 
+    float GetX2() { return m_pStick->GetRawAxis( 4 ); }
+    float GetY2() { return -m_pStick->GetRawAxis( 5 ); }
     int GetAuto() { return m_pAutoSelect->GetDigital(10); }
-  
+
+    bool MechanumMode() { return m_pGamepadStart->Get(); }
+    bool TankMode()     { return m_pGamepadBack->Get(); }
 }; 
 #endif

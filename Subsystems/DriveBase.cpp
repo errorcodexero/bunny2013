@@ -3,6 +3,16 @@
 
 #include "DriveBase.h"
 
+static const char *driveModeName[] = {
+    "INITIAL",
+    "MECH",
+    "TANK",
+    "MECHTOTANK_1",
+    "MECHTOTANK_2",
+    "TANKTOMECH_1",
+    "TANKTOMECH_2",
+};
+
 DriveBase::DriveBase( int frontLeftMotorChannel,
 		      int backLeftMotorChannel,
 		      int frontRightMotorChannel,
@@ -19,8 +29,8 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_solenoid(NULL),
     m_defaultCommand(NULL),
     m_started(false),
-	m_driveMode(INITIAL),
-	m_driveModeTimer(0)
+    m_driveMode(INITIAL),
+    m_driveModeTimer(0)
 {
     LiveWindow *lw = LiveWindow::GetInstance();
 
@@ -46,6 +56,7 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     Stop();
 }
 
+
 DriveBase::~DriveBase()
 {
     SetDefaultCommand(NULL);
@@ -64,6 +75,7 @@ DriveBase::~DriveBase()
     delete m_front_left;
 }
     
+
 void DriveBase::InitDefaultCommand()
 {
     if (!m_defaultCommand) {
@@ -72,10 +84,9 @@ void DriveBase::InitDefaultCommand()
     }
 }
 
+
 void DriveBase::Stop()
 {
-printf("DriveBase::Stop\n");
-
     // stop and disable all motors
 #if 0
     // Disabling the PWM outputs is confusing because it looks like
@@ -95,10 +106,10 @@ printf("DriveBase::Stop\n");
     m_started = false;
 }
 
+
 void DriveBase::Start()
 {
     if (!m_started) {
-printf("DriveBase::Start\n");
 	// set the watchdog timers to something long enough to
 	// avoid panic in the presence of short-term network dropouts
 	m_drive->SetExpiration(2.0);
@@ -124,61 +135,80 @@ printf("DriveBase::Start\n");
     }
 }
 
+
 void DriveBase::setNewMode(enum DriveMode newMode) 
 {
-	if (newMode == m_driveMode) return; //Shortcut if we're already in the right mode
-	if (newMode == INITIAL) 
-	{
-		newMode = TANKTOMECH_2;
-	}
-	switch (newMode){
-		case MECH: 
-		case TANK:
-			break; 
-		case TANKTOMECH_1:
-		case MECHTOTANK_1:
-			Stop();
-			break;
-		case MECHTOTANK_2:
-			m_solenoid->Set(true);
-			break;
-		case TANKTOMECH_2:
-			m_solenoid->Set(false);
-			break;
-	}
-	m_driveMode = newMode;
-	m_driveModeTimer = GetFPGATime();
+    if (newMode == m_driveMode) {
+    	//Shortcut if we're already in the right mode
+	return;
+    }
+
+// printf("DriveBase::setNewMode(%s)\n", driveModeName[newMode]);
+
+    switch (newMode) {
+	case MECH: 
+	case TANK:
+	    break; 
+	case TANKTOMECH_1:
+	case MECHTOTANK_1:
+	    Stop();
+	    break;
+	case MECHTOTANK_2:
+	    m_solenoid->Set(false);
+	    break;
+	case TANKTOMECH_2:
+	    m_solenoid->Set(true);
+	    break;
+    }
+    m_driveMode = newMode;
+    m_driveModeTimer = GetFPGATime();
 }
+
+
 void DriveBase::driveModeStateMachine()
 {
-	unsigned long elapsedTime = GetFPGATime() - m_driveModeTimer;
-	switch (m_driveMode){
-		case MECH: 
-		case TANK:
-			break; 
-		case TANKTOMECH_1:
-			if (elapsedTime > BRAKINGTIME) 
-				setNewMode(TANKTOMECH_2);
-			break;
-		case MECHTOTANK_1:
-			if (elapsedTime > BRAKINGTIME) 
-				setNewMode(MECHTOTANK_2);
-			break;
-		case MECHTOTANK_2:
-			if (elapsedTime > TRANSITIONTIME) 
-				setNewMode(TANK);
-			break;
-		case TANKTOMECH_2:
-			if (elapsedTime > TRANSITIONTIME) 
-				setNewMode(MECH);
-			break;
-	}
+    unsigned long elapsedTime = GetFPGATime() - m_driveModeTimer;
+    switch (m_driveMode) {
+	case INITIAL:
+	    setNewMode(TANKTOMECH_2);
+	    break;
+	case MECH: 
+	case TANK:
+	    break; 
+	case TANKTOMECH_1:
+	    if (elapsedTime > BRAKINGTIME) 
+		setNewMode(TANKTOMECH_2);
+	    break;
+	case MECHTOTANK_1:
+	    if (elapsedTime > BRAKINGTIME) 
+		setNewMode(MECHTOTANK_2);
+	    break;
+	case MECHTOTANK_2:
+	    if (elapsedTime > TRANSITIONTIME) 
+		setNewMode(TANK);
+	    break;
+	case TANKTOMECH_2:
+	    if (elapsedTime > TRANSITIONTIME) 
+		setNewMode(MECH);
+	    break;
+    }
 }
 
 void DriveBase::Drive( float x, float y, float twist )
 {
+
+static unsigned long noise;
+if (noise == 0) noise = GetFPGATime();
+unsigned long now = GetFPGATime();
+if ((now - noise) >= 3000000UL) {
+    printf("DriveBase: %s x %4.2f y %4.2f t %4.2f\n",
+	    driveModeName[m_driveMode], x, y, twist);
+    noise = now;
+}
+
+    driveModeStateMachine();
 	
-	// Reduce the sensitivity to the "twist" control.
+    // Reduce the sensitivity to the "twist" control.
     // Add gyro compensation (adjust the "200" for best PID response).
     twist -= m_gyro->GetRate() / 200.;
 
@@ -186,50 +216,52 @@ void DriveBase::Drive( float x, float y, float twist )
     if (twist < -1.0) twist = -1.0;
     if (twist > 1.0) twist = 1.0;
 
+    // can't drive sideways with the tank wheels
+    if (m_driveMode == TANK) {
+	x = 0.0;
+    }
+
     // RobotDrive was designed to work with joysticks that generate
     // y = -1.0 for forward motion.  We prefer to think of forward
     // motion as y = +1.0.  Change the sign here (and also at the
     // point in the OI where we read the joystick!)
-    driveModeStateMachine();
-    switch (m_driveMode) {
-    	case MECH:
-    		if (!m_started) Start();
-    		m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );
-    		break;
-    	case TANK:
-    		if (!m_started) Start();
-    		m_drive->ArcadeDrive(y, twist, false);
-    		break;
-    	default:
-    		break;
-    }
+
+    if (!m_started) Start();
+    m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );
 }
+
 
 bool DriveBase::SetDriveMode(bool tankMode)
 {
-	switch (m_driveMode) {
-		case INITIAL:
-			break;
-		case MECH:
-			if (tankMode) setNewMode(MECHTOTANK_1);
-			break;
-		case TANK:
-			if (!tankMode) setNewMode(TANKTOMECH_1);
-			break;
-		case MECHTOTANK_1:
-			if (!tankMode) setNewMode(MECH);
-			break;
-		case MECHTOTANK_2:
-			if (!tankMode) setNewMode(TANKTOMECH_2);
-			break;
-		case TANKTOMECH_1:
-			if (tankMode) setNewMode(TANK);
-			break;
-		case TANKTOMECH_2:
-			if (tankMode) setNewMode(MECHTOTANK_2);
-			break;
-		default:
-			break;
-	}
-	return ((tankMode && m_driveMode == TANK) || (!tankMode && m_driveMode == MECH));
+    driveModeStateMachine();
+
+    switch (m_driveMode) {
+	case INITIAL:
+	    break;
+	case MECH:
+	    if (tankMode) setNewMode(MECHTOTANK_1);
+	    break;
+	case TANK:
+	    if (!tankMode) setNewMode(TANKTOMECH_1);
+	    break;
+	case MECHTOTANK_1:
+	    if (!tankMode) setNewMode(MECH);
+	    break;
+	case MECHTOTANK_2:
+	    if (!tankMode) setNewMode(TANKTOMECH_2);
+	    break;
+	case TANKTOMECH_1:
+	    if (tankMode) setNewMode(TANK);
+	    break;
+	case TANKTOMECH_2:
+	    if (tankMode) setNewMode(MECHTOTANK_2);
+	    break;
+	default:
+	    break;
+    }
+
+    return ((tankMode && m_driveMode == TANK) ||
+    	    (!tankMode && m_driveMode == MECH));
 }
+
+

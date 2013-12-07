@@ -319,7 +319,7 @@ AutoCommand::~AutoCommand()
 
 void AutoCommand::Initialize()
 {
-    printf("AutoCommand::Initialize\n");
+    // printf("AutoCommand::Initialize\n");
     
     // configure TimedDrive steps to run the selected pattern
     // as currently displayed on the SmartDashboard
@@ -333,7 +333,7 @@ void AutoCommand::Initialize()
 
 void AutoCommand::GetAutoPreferences()
 {
-    printf("AutoCommand::GetAutoPreferences\n");
+    // printf("AutoCommand::GetAutoPreferences\n");
 
     Preferences *pref = Preferences::GetInstance();
 
@@ -650,7 +650,7 @@ void AutoCommand::GetAutoPreferences()
 
 void AutoCommand::SaveAutoPreferences()
 {
-    printf("AutoCommand::SaveAutoPreferences\n");
+    // printf("AutoCommand::SaveAutoPreferences\n");
 
     Preferences *pref = Preferences::GetInstance();
 
@@ -970,8 +970,11 @@ void AutoCommand::SaveAutoPreferences()
 void AutoCommand::SetDrivePattern( int newPattern )
 {
     if (newPattern != m_pattern) {
-	printf("AutoCommand::SetDrivePattern: pattern was %d changed to %d\n",
-	       m_pattern, newPattern);
+	/*
+	printf("AutoCommand::SetDrivePattern: "
+		  "pattern was %d changed to %d\n",
+		   m_pattern, newPattern);
+	*/
 	GetDashboardSettings();
 	m_pattern = newPattern;
 	PutDashboardSettings();
@@ -980,7 +983,7 @@ void AutoCommand::SetDrivePattern( int newPattern )
 
 void AutoCommand::GetDashboardSettings()
 {
-    printf("AutoCommand::GetDashboardSettings\n");
+    // printf("AutoCommand::GetDashboardSettings\n");
 
     DrivePattern *dp = &m_drivePattern[ m_pattern ];
 
@@ -1017,7 +1020,7 @@ void AutoCommand::GetDashboardSettings()
 
 void AutoCommand::PutDashboardSettings()
 {
-    printf("AutoCommand::PutDashboardSettings\n");
+    // printf("AutoCommand::PutDashboardSettings\n");
 
     SmartDashboard::PutNumber(PATTERN, m_pattern);
 
@@ -1066,12 +1069,12 @@ bool AutoCommand::IsFinished()
 
 void AutoCommand::End()
 {
-    printf("AutoCommand::End\n");
+    // printf("AutoCommand::End\n");
 }
 
 void AutoCommand::Interrupted()
 {
-    printf("AutoCommand::Interrupted\n");
+    // printf("AutoCommand::Interrupted\n");
 }
 
 AutoSelect::AutoSelect( AutoCommand *cmd ) : Command("AutoSelect")
@@ -1083,7 +1086,7 @@ AutoSelect:: ~AutoSelect() {}
 
 void AutoSelect::Initialize()
 {
-    printf("AutoSelect::Initialize\n");
+    // printf("AutoSelect::Initialize\n");
 }
 
 void AutoSelect::Execute()
@@ -1106,7 +1109,7 @@ AutoSave::~AutoSave() {}
 
 void AutoSave::Initialize()
 {
-    printf("AutoSave::Initialize\n");
+    // printf("AutoSave::Initialize\n");
     m_auto->GetDashboardSettings();
     m_auto->SaveAutoPreferences();
 }

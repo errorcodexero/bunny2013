@@ -10,6 +10,9 @@
 // drive under joystick control.
 
 class DriveCommand: public Command {
+private:
+    bool tankMode;
+
 public:
     DriveCommand();
     virtual void Initialize();

@@ -37,7 +37,7 @@ void Robot::RobotInit()
 
     m_driveBase = new DriveBase( PWM_DRIVE_FRONT_LEFT, PWM_DRIVE_BACK_LEFT,
 				 PWM_DRIVE_FRONT_RIGHT, PWM_DRIVE_BACK_RIGHT,
-				 ANALOG_GYRO );
+				 ANALOG_GYRO, DRIVE_MODE );
 
     // commands
 

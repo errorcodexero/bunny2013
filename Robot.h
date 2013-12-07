@@ -31,12 +31,16 @@ class OI;
 // Analog Inputs:
 // 1 - turn rate gyro
 //     + output is clockwise rotation
+// 2-7 - reflective proximity sensor inputs
+// 8 - battery (from analog bumper)
 
 #define ANALOG_GYRO			1
-
-// 2-7 - not used
-
-// 8 - battery (from analog bumper)
+#define	PROXIMITY_FRONT_LEFT		2
+#define	PROXIMITY_RIGHT_SIDE_REAR	3
+#define	PROXIMITY_RIGHT_SIDE_FRONT	4
+#define	PROXIMITY_LEFT_SIDE_REAR	5
+#define	PROXIMITY_LEFT_SIDE_FRONT	6
+#define	PROXIMITY_FRONT_RIGHT		7
 
 ////////////////////////////////////////////////////////////////////
 // Relay (Spike) Outputs:
@@ -46,9 +50,11 @@ class OI;
 
 ////////////////////////////////////////////////////////////////////
 // Solenoid Outputs:
-//
+// 1 - drive mode
+//     activate for mecanum drive
+//     deactivate for tank drive
 
-// 1-8 - not used
+#define	DRIVE_MODE			1
 
 ////////////////////////////////////////////////////////////////////
 // PWM Outputs:
@@ -66,24 +72,11 @@ class OI;
 
 ////////////////////////////////////////////////////////////////////
 // CAN (CANJaguar) channels:
+
 // not used
 
 ////////////////////////////////////////////////////////////////////
 
-extern const char KEY_SPEED_SHORT[];
-#define	DEFAULT_SPEED_SHORT  1600 // shooting at tower from base of tower
-
-extern const char KEY_SPEED_MID_2[];
-#define	DEFAULT_SPEED_MID_2  2300 // shooting at 2 pt. goal from back of tower
-
-extern const char KEY_SPEED_MID_3[];
-#define	DEFAULT_SPEED_MID_3  2500 // shooting at 3 pt. goal from back of tower
-
-extern const char KEY_SPEED_LONG_2[];
-#define	DEFAULT_SPEED_LONG_2 3000 // shooting at 2 pt. goal from feeder station
-
-extern const char KEY_SPEED_LONG_3[];
-#define	DEFAULT_SPEED_LONG_3 3200 // shooting at 3 pt. goal from feeder station
 
 ////////////////////////////////////////////////////////////////////
 

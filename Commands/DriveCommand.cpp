@@ -7,13 +7,12 @@
 #include "DriveBase.h"
 #include "DriveCommand.h"
 
-static UINT32 then;
-
 // Identify resources required by this command.
 // Other commands that are using these resources will be Canceled
 // when this command is Started.
 DriveCommand::DriveCommand() :
-    Command("DriveCommand")
+    Command("DriveCommand"),
+    tankMode(true)
 {
     Requires(Robot::driveBase());
 }
@@ -22,24 +21,26 @@ DriveCommand::DriveCommand() :
 void DriveCommand::Initialize()
 {
     printf("DriveCommand::Initialize\n");
-    then = GetFPGATime();
+    tankMode = true;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DriveCommand::Execute()
 {
-//  UINT32 now = GetFPGATime();
-//  if (now - then > 30000) {
-//      printf("DriveCommand::Execute %u\n", now - then);
-//  }
-//  then = now;
+    if (Robot::oi()->MechanumMode()) {
+	if (tankMode) printf("DriveCommand: switch to mechanum mode\n");
+	tankMode = false;
+    } else if (Robot::oi()->TankMode()) {
+	if (!tankMode) printf("DriveCommand: switch to tank mode\n");
+	tankMode = true;
+    }
+
+    (void) Robot::driveBase()->SetDriveMode(tankMode);
 
     float throttle = (1.0 - Robot::oi()->GetThrottle())/2.0;
     float x = Robot::oi()->GetX();
     float y = Robot::oi()->GetY();
     float t = Robot::oi()->GetTwist();
-//  printf("%g %g %g %g\n", x, y, throttle, t);
-
     Robot::driveBase()->Drive(x * throttle, y * throttle, t);
 }
 

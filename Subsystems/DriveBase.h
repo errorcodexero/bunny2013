@@ -8,6 +8,10 @@
 #include "RateGyro.h"
 #include "DriveCommand.h"
 
+
+#define BRAKINGTIME	500000UL	// 1/2 second, 
+#define TRANSITIONTIME	500000UL	// 1/2 second, 
+
 // robot drive base with four-wheel mecanum drive
 
 class DriveBase : public Subsystem {
