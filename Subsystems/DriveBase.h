@@ -18,16 +18,23 @@ private:
 	SpeedController * m_back_right;
 	RobotDrive * m_drive;
 	RateGyro * m_gyro;
+	Solenoid * m_solenoid;
 	INT32 m_gyroZero;
 	Command * m_defaultCommand;
 	bool m_started;
-
+	enum DriveMode {INITIAL, MECH, TANK, MECHTOTANK_1, MECHTOTANK_2, TANKTOMECH_1, TANKTOMECH_2} m_driveMode;
+	unsigned long m_driveModeTimer;
+	
+	void setNewMode(enum DriveMode newMode);
+	void driveModeStateMachine(void);
+	
 public:
 	DriveBase( int frontLeftMotorChannel,
 		   int backLeftMotorChannel,
 		   int frontRightMotorChannel,
 		   int backRightMotorChannel,
-		   int gyroAnalogChannel );
+		   int gyroAnalogChannel, 
+		   int solenoidChannel );
 
 	~DriveBase();
 
@@ -36,6 +43,7 @@ public:
 	void Stop();
 	void Start();
 	void Drive( float x, float y, float twist );
+	bool SetDriveMode(bool tankMode);
 };
 
 #endif

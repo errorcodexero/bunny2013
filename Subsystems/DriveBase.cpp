@@ -7,7 +7,8 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
 		      int backLeftMotorChannel,
 		      int frontRightMotorChannel,
 		      int backRightMotorChannel,
-		      int gyroAnalogChannel )
+		      int gyroAnalogChannel,
+		      int solenoidChannel )
     : Subsystem("DriveBase"),
     m_front_left(NULL),
     m_back_left(NULL),
@@ -15,8 +16,11 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_back_right(NULL),
     m_drive(NULL),
     m_gyro(NULL),
+    m_solenoid(NULL),
     m_defaultCommand(NULL),
-    m_started(false)
+    m_started(false),
+	m_driveMode(INITIAL),
+	m_driveModeTimer(0)
 {
     LiveWindow *lw = LiveWindow::GetInstance();
 
@@ -36,6 +40,9 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_gyro = new RateGyro(1, gyroAnalogChannel);
     lw->AddSensor("DriveBase", "Gyro", m_gyro);
 
+    m_solenoid = new Solenoid(solenoidChannel);
+    lw->AddActuator("DriveBase", "Solenoid", m_solenoid);
+    
     Stop();
 }
 
@@ -47,7 +54,8 @@ DriveBase::~DriveBase()
     m_defaultCommand = NULL;
 
     Stop();
-
+    
+    delete m_solenoid;
     delete m_gyro;
     delete m_drive;
     delete m_back_right;
@@ -116,11 +124,61 @@ printf("DriveBase::Start\n");
     }
 }
 
+void DriveBase::setNewMode(enum DriveMode newMode) 
+{
+	if (newMode == m_driveMode) return; //Shortcut if we're already in the right mode
+	if (newMode == INITIAL) 
+	{
+		newMode = TANKTOMECH_2;
+	}
+	switch (newMode){
+		case MECH: 
+		case TANK:
+			break; 
+		case TANKTOMECH_1:
+		case MECHTOTANK_1:
+			Stop();
+			break;
+		case MECHTOTANK_2:
+			m_solenoid->Set(true);
+			break;
+		case TANKTOMECH_2:
+			m_solenoid->Set(false);
+			break;
+	}
+	m_driveMode = newMode;
+	m_driveModeTimer = GetFPGATime();
+}
+void DriveBase::driveModeStateMachine()
+{
+	unsigned long elapsedTime = GetFPGATime() - m_driveModeTimer;
+	switch (m_driveMode){
+		case MECH: 
+		case TANK:
+			break; 
+		case TANKTOMECH_1:
+			if (elapsedTime > BRAKINGTIME) 
+				setNewMode(TANKTOMECH_2);
+			break;
+		case MECHTOTANK_1:
+			if (elapsedTime > BRAKINGTIME) 
+				setNewMode(MECHTOTANK_2);
+			break;
+		case MECHTOTANK_2:
+			if (elapsedTime > TRANSITIONTIME) 
+				setNewMode(TANK);
+			break;
+		case TANKTOMECH_2:
+			if (elapsedTime > TRANSITIONTIME) 
+				setNewMode(MECH);
+			break;
+	}
+}
+
 void DriveBase::Drive( float x, float y, float twist )
 {
-    if (!m_started) Start();
-
-    // Reduce the sensitivity to the "twist" control.
+	
+	// Reduce the sensitivity to the "twist" control.
     // Add gyro compensation (adjust the "200" for best PID response).
     twist -= m_gyro->GetRate() / 200.;
 
@@ -132,6 +190,46 @@ void DriveBase::Drive( float x, float y, float twist )
     // y = -1.0 for forward motion.  We prefer to think of forward
     // motion as y = +1.0.  Change the sign here (and also at the
     // point in the OI where we read the joystick!)
-    m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );
+    driveModeStateMachine();
+    switch (m_driveMode) {
+    	case MECH:
+    		if (!m_started) Start();
+    		m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );
+    		break;
+    	case TANK:
+    		if (!m_started) Start();
+    		m_drive->ArcadeDrive(y, twist, false);
+    		break;
+    	default:
+    		break;
+    }
 }
 
+bool DriveBase::SetDriveMode(bool tankMode)
+{
+	switch (m_driveMode) {
+		case INITIAL:
+			break;
+		case MECH:
+			if (tankMode) setNewMode(MECHTOTANK_1);
+			break;
+		case TANK:
+			if (!tankMode) setNewMode(TANKTOMECH_1);
+			break;
+		case MECHTOTANK_1:
+			if (!tankMode) setNewMode(MECH);
+			break;
+		case MECHTOTANK_2:
+			if (!tankMode) setNewMode(TANKTOMECH_2);
+			break;
+		case TANKTOMECH_1:
+			if (tankMode) setNewMode(TANK);
+			break;
+		case TANKTOMECH_2:
+			if (tankMode) setNewMode(MECHTOTANK_2);
+			break;
+		default:
+			break;
+	}
+	return ((tankMode && m_driveMode == TANK) || (!tankMode && m_driveMode == MECH));
+}

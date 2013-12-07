@@ -7,7 +7,7 @@
 #define OVERSAMPLE_BITS 0
 #define SAMPLES_PER_SECOND 50
 #define	SAMPLE_RATE (SAMPLES_PER_SECOND*(1<<(AVERAGE_BITS+OVERSAMPLE_BITS)))
-#define	SENSITIVITY 0.010	// volts per degree per second
+#define	SENSITIVITY 0.015	// volts per degree per second
 
 void RateGyro::InitChannel()
 {
