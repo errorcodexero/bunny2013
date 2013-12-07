@@ -36,10 +36,10 @@ class OI;
 
 #define ANALOG_GYRO			1
 #define	PROXIMITY_FRONT_LEFT		2
-#define	PROXIMITY_RIGHT_SIDE_REAR	3
-#define	PROXIMITY_RIGHT_SIDE_FRONT	4
-#define	PROXIMITY_LEFT_SIDE_REAR	5
-#define	PROXIMITY_LEFT_SIDE_FRONT	6
+#define	PROXIMITY_RIGHT_REAR		3
+#define	PROXIMITY_RIGHT_FRONT		4
+#define	PROXIMITY_LEFT_REAR		5
+#define	PROXIMITY_LEFT_FRONT		6
 #define	PROXIMITY_FRONT_RIGHT		7
 
 ////////////////////////////////////////////////////////////////////

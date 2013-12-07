@@ -18,7 +18,13 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
 		      int frontRightMotorChannel,
 		      int backRightMotorChannel,
 		      int gyroAnalogChannel,
-		      int solenoidChannel )
+		      int solenoidChannel,
+		      int proximityFrontLeft,
+		      int proximityFrontRight,
+		      int proximityRightFront,
+		      int proximityRightRear,
+		      int proximityLeftFront,
+		      int proximityLeftRear )
     : Subsystem("DriveBase"),
     m_front_left(NULL),
     m_back_left(NULL),
@@ -27,6 +33,12 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_drive(NULL),
     m_gyro(NULL),
     m_solenoid(NULL),
+    m_proximityFrontLeft(NULL),
+    m_proximityFrontRight(NULL),
+    m_proximityRightFront(NULL),
+    m_proximityRightRear(NULL),
+    m_proximityLeftFront(NULL),
+    m_proximityLeftRear(NULL),
     m_defaultCommand(NULL),
     m_started(false),
     m_driveMode(INITIAL),
@@ -53,6 +65,19 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_solenoid = new Solenoid(solenoidChannel);
     lw->AddActuator("DriveBase", "Solenoid", m_solenoid);
     
+    m_proximityFrontLeft = new AnalogChannel(proximityFrontLeft);
+    lw->AddSensor("DriveBase", "ProximityFrontLeft", m_proximityFrontLeft);
+    m_proximityFrontRight = new AnalogChannel(proximityFrontRight);
+    lw->AddSensor("DriveBase", "ProximityFrontRight", m_proximityFrontRight);
+    m_proximityRightFront = new AnalogChannel(proximityRightFront);
+    lw->AddSensor("DriveBase", "ProximityRightFront", m_proximityRightFront);
+    m_proximityRightRear = new AnalogChannel(proximityRightRear);
+    lw->AddSensor("DriveBase", "ProximityRightRear", m_proximityRightRear);
+    m_proximityLeftFront = new AnalogChannel(proximityLeftFront);
+    lw->AddSensor("DriveBase", "ProximityLeftFront", m_proximityLeftFront);
+    m_proximityLeftRear = new AnalogChannel(proximityLeftRear); 
+    lw->AddSensor("DriveBase", "ProximityLeftRear", m_proximityLeftRear);
+
     Stop();
 }
 
@@ -194,17 +219,19 @@ void DriveBase::driveModeStateMachine()
     }
 }
 
-void DriveBase::Drive( float x, float y, float twist )
+void DriveBase::Drive( float x, float y, float twist, bool pushy )
 {
 
-static unsigned long noise;
-if (noise == 0) noise = GetFPGATime();
-unsigned long now = GetFPGATime();
-if ((now - noise) >= 3000000UL) {
-    printf("DriveBase: %s x %4.2f y %4.2f t %4.2f\n",
-	    driveModeName[m_driveMode], x, y, twist);
-    noise = now;
-}
+#if 0
+    static unsigned long noise;
+    if (noise == 0) noise = GetFPGATime();
+    unsigned long now = GetFPGATime();
+    if ((now - noise) >= 3000000UL) {
+	printf("DriveBase: %s x %4.2f y %4.2f t %4.2f\n",
+		driveModeName[m_driveMode], x, y, twist);
+	noise = now;
+    }
+#endif
 
     driveModeStateMachine();
 	
@@ -219,6 +246,53 @@ if ((now - noise) >= 3000000UL) {
     // can't drive sideways with the tank wheels
     if (m_driveMode == TANK) {
 	x = 0.0;
+    }
+
+    if (!pushy) {
+	// collision avoidance
+	if (m_proximityFrontLeft->GetVoltage() > TOOCLOSE ||
+	    m_proximityFrontRight->GetVoltage() > TOOCLOSE)
+	{
+	    if (y > -0.2) y = -0.2;
+	}
+	else if (m_proximityFrontLeft->GetVoltage() > PRETTYCLOSE ||
+	    m_proximityFrontRight->GetVoltage() > PRETTYCLOSE)
+	{
+	    if (y > 0.) y = 0.;
+	}
+	if (m_proximityLeftFront->GetVoltage() > TOOCLOSE ||
+	    m_proximityLeftRear->GetVoltage() > TOOCLOSE)
+	{
+	    if (x < 0.2) x = 0.2;
+	}
+	else if (m_proximityLeftFront->GetVoltage() > PRETTYCLOSE ||
+	    m_proximityLeftRear->GetVoltage() > PRETTYCLOSE)
+	{
+	    if (x < 0.) x = 0.;
+	}
+	if (m_proximityRightFront->GetVoltage() > TOOCLOSE ||
+	    m_proximityRightRear->GetVoltage() > TOOCLOSE)
+	{
+	    if (x > -0.2) x = -0.2;
+	}
+	else if (m_proximityRightFront->GetVoltage() > PRETTYCLOSE ||
+	    m_proximityRightRear->GetVoltage() > PRETTYCLOSE)
+	{
+	    if (x > 0.) x = 0.;
+	}
+	// corner protection
+	if (m_proximityFrontLeft->GetVoltage() > TOOCLOSE ||
+	    m_proximityLeftRear->GetVoltage() > TOOCLOSE ||
+	    m_proximityRightFront->GetVoltage() > TOOCLOSE)
+	{
+	    if (twist > 0.) twist = 0.;
+	}
+	if (m_proximityFrontRight->GetVoltage() > TOOCLOSE ||
+	    m_proximityLeftFront->GetVoltage() > TOOCLOSE ||
+	    m_proximityRightRear->GetVoltage() > TOOCLOSE)
+	{
+	    if (twist < 0.) twist = 0.;
+	}
     }
 
     // RobotDrive was designed to work with joysticks that generate

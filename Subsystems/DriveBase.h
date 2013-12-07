@@ -11,6 +11,8 @@
 
 #define BRAKINGTIME	500000UL	// 1/2 second, 
 #define TRANSITIONTIME	500000UL	// 1/2 second, 
+#define	PRETTYCLOSE	1.2		// about 1/2 meter
+#define	TOOCLOSE	1.6		// about 1/4 meter
 
 // robot drive base with four-wheel mecanum drive
 
@@ -23,6 +25,12 @@ private:
 	RobotDrive * m_drive;
 	RateGyro * m_gyro;
 	Solenoid * m_solenoid;
+	AnalogChannel *m_proximityFrontLeft;
+	AnalogChannel *m_proximityFrontRight;
+	AnalogChannel *m_proximityRightFront;
+	AnalogChannel *m_proximityRightRear;
+	AnalogChannel *m_proximityLeftFront;
+	AnalogChannel *m_proximityLeftRear;
 	INT32 m_gyroZero;
 	Command * m_defaultCommand;
 	bool m_started;
@@ -38,7 +46,13 @@ public:
 		   int frontRightMotorChannel,
 		   int backRightMotorChannel,
 		   int gyroAnalogChannel, 
-		   int solenoidChannel );
+		   int solenoidChannel,
+		   int proximityFrontLeft,
+		   int proximityFrontRight,
+		   int proximityRightFront,
+		   int proximityRightRear,
+		   int proximityLeftFront,
+		   int proximityLeftRear );
 
 	~DriveBase();
 
@@ -46,7 +60,7 @@ public:
 
 	void Stop();
 	void Start();
-	void Drive( float x, float y, float twist );
+	void Drive( float x, float y, float twist, bool pushy = false );
 	bool SetDriveMode(bool tankMode);
 };
 
