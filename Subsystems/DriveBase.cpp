@@ -250,55 +250,84 @@ void DriveBase::Drive( float x, float y, float twist, bool pushy )
 
     if (!pushy) {
 	// collision avoidance
-	if (m_proximityFrontLeft->GetVoltage() > TOOCLOSE ||
-	    m_proximityFrontRight->GetVoltage() > TOOCLOSE)
-	{
-	    if (y > -0.2) y = -0.2;
+	float v;
+	
+	v = m_proximityFrontLeft->GetVoltage();
+	if (v > PRETTYCLOSE) {
+	    float backoff;
+	    if (v > TOOCLOSE) {
+		backoff = BACKOFF;
+	    } else {
+		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
+	    }
+	    if (y > -backoff) y = -backoff;
 	}
-	else if (m_proximityFrontLeft->GetVoltage() > PRETTYCLOSE ||
-	    m_proximityFrontRight->GetVoltage() > PRETTYCLOSE)
-	{
-	    if (y > 0.) y = 0.;
+
+	v = m_proximityFrontRight->GetVoltage();
+	if (v > PRETTYCLOSE) {
+	    float backoff;
+	    if (v > TOOCLOSE) {
+		backoff = BACKOFF;
+	    } else {
+		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
+	    }
+	    if (y > -backoff) y = -backoff;
 	}
-	if (m_proximityLeftFront->GetVoltage() > TOOCLOSE ||
-	    m_proximityLeftRear->GetVoltage() > TOOCLOSE)
-	{
-	    if (x < 0.2) x = 0.2;
+
+	v = m_proximityLeftFront->GetVoltage();
+	if (v > PRETTYCLOSE) {
+	    float backoff;
+	    if (v > TOOCLOSE) {
+		backoff = BACKOFF;
+	    } else {
+		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
+	    }
+	    if (x < backoff) x = backoff;
 	}
-	else if (m_proximityLeftFront->GetVoltage() > PRETTYCLOSE ||
-	    m_proximityLeftRear->GetVoltage() > PRETTYCLOSE)
-	{
-	    if (x < 0.) x = 0.;
+
+	v = m_proximityLeftRear->GetVoltage();
+	if (v > PRETTYCLOSE) {
+	    float backoff;
+	    if (v > TOOCLOSE) {
+		backoff = BACKOFF;
+	    } else {
+		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
+	    }
+	    if (x < backoff) x = backoff;
 	}
-	if (m_proximityRightFront->GetVoltage() > TOOCLOSE ||
-	    m_proximityRightRear->GetVoltage() > TOOCLOSE)
-	{
-	    if (x > -0.2) x = -0.2;
+
+	v = m_proximityRightFront->GetVoltage();
+	if (v > PRETTYCLOSE) {
+	    float backoff;
+	    if (v > TOOCLOSE) {
+		backoff = BACKOFF;
+	    } else {
+		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
+	    }
+	    if (x > -backoff) x = -backoff;
 	}
-	else if (m_proximityRightFront->GetVoltage() > PRETTYCLOSE ||
-	    m_proximityRightRear->GetVoltage() > PRETTYCLOSE)
-	{
-	    if (x > 0.) x = 0.;
+
+	v = m_proximityRightRear->GetVoltage();
+	if (v > PRETTYCLOSE) {
+	    float backoff;
+	    if (v > TOOCLOSE) {
+		backoff = BACKOFF;
+	    } else {
+		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
+	    }
+	    if (x > -backoff) x = -backoff;
 	}
-	// corner protection
-	if (m_proximityFrontLeft->GetVoltage() > TOOCLOSE ||
-	    m_proximityLeftRear->GetVoltage() > TOOCLOSE ||
-	    m_proximityRightFront->GetVoltage() > TOOCLOSE)
-	{
-	    if (twist > 0.) twist = 0.;
-	}
-	if (m_proximityFrontRight->GetVoltage() > TOOCLOSE ||
-	    m_proximityLeftFront->GetVoltage() > TOOCLOSE ||
-	    m_proximityRightRear->GetVoltage() > TOOCLOSE)
-	{
-	    if (twist < 0.) twist = 0.;
-	}
+
+	// TBD: consider adding twist correction for tank-drive mode
     }
 
     // RobotDrive was designed to work with joysticks that generate
     // y = -1.0 for forward motion.  We prefer to think of forward
     // motion as y = +1.0.  Change the sign here (and also at the
     // point in the OI where we read the joystick!)
+
+    // TBD: check the motor speed calculations; we may have to use ArcadeDrive
+    // to get the correct results for tank mode.
 
     if (!m_started) Start();
     m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );

@@ -11,8 +11,9 @@
 
 #define BRAKINGTIME	500000UL	// 1/2 second, 
 #define TRANSITIONTIME	500000UL	// 1/2 second, 
-#define	PRETTYCLOSE	1.2		// about 1/2 meter
+#define	PRETTYCLOSE	1.0		// about 3/4 meter
 #define	TOOCLOSE	1.6		// about 1/4 meter
+#define	BACKOFF		0.20		// speed to back away from obstacle
 
 // robot drive base with four-wheel mecanum drive
 
