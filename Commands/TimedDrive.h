@@ -10,10 +10,11 @@ class TimedDrive: public Command {
 private:
     double m_x, m_y, m_t, m_time;
     double m_startTime;
+    bool m_pushy;
 public:
     TimedDrive( double x = 0.0, double y = 0.0, double t = 0.0,
-    		double seconds = 0 );
-    void Set( double x, double y, double t, double seconds );
+    		double seconds = 0, bool pushy = true );
+    void Set( double x, double y, double t, double seconds, bool pushy = true );
     virtual void Initialize();
     virtual void Execute();
     void Stop();

@@ -35,7 +35,15 @@ private:
 	INT32 m_gyroZero;
 	Command * m_defaultCommand;
 	bool m_started;
-	enum DriveMode {INITIAL, MECH, TANK, MECHTOTANK_1, MECHTOTANK_2, TANKTOMECH_1, TANKTOMECH_2} m_driveMode;
+	enum DriveMode {
+	    INITIAL,
+	    MECH,
+	    TANK,
+	    MECHTOTANK_1,
+	    MECHTOTANK_2,
+	    TANKTOMECH_1,
+	    TANKTOMECH_2
+	} m_driveMode;
 	unsigned long m_driveModeTimer;
 	
 	void setNewMode(enum DriveMode newMode);

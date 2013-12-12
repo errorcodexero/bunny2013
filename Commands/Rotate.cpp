@@ -54,7 +54,7 @@ void Rotate::Set( double x, double y, double t, double seconds )
 // Called repeatedly when this Command is scheduled to run
 void Rotate::Execute()
 {
-    Robot::driveBase()->Drive(m_x, m_y, m_t);
+    Robot::driveBase()->Drive(m_x, m_y, m_t, true);
 }
 
 // Make this return true when this Command no longer needs to run execute()

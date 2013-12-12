@@ -3,6 +3,7 @@
 
 #include "DriveBase.h"
 
+#if 0
 static const char *driveModeName[] = {
     "INITIAL",
     "MECH",
@@ -12,6 +13,7 @@ static const char *driveModeName[] = {
     "TANKTOMECH_1",
     "TANKTOMECH_2",
 };
+#endif
 
 DriveBase::DriveBase( int frontLeftMotorChannel,
 		      int backLeftMotorChannel,
@@ -168,7 +170,9 @@ void DriveBase::setNewMode(enum DriveMode newMode)
 	return;
     }
 
-// printf("DriveBase::setNewMode(%s)\n", driveModeName[newMode]);
+#if 0
+    printf("DriveBase::setNewMode(%s)\n", driveModeName[newMode]);
+#endif
 
     switch (newMode) {
 	case MECH: 
@@ -178,6 +182,7 @@ void DriveBase::setNewMode(enum DriveMode newMode)
 	case MECHTOTANK_1:
 	    Stop();
 	    break;
+	case INITIAL:
 	case MECHTOTANK_2:
 	    m_solenoid->Set(false);
 	    break;

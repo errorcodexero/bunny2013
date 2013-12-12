@@ -41,7 +41,7 @@ void DriveCommand::Execute()
     float x = Robot::oi()->GetX();
     float y = Robot::oi()->GetY();
     float t = Robot::oi()->GetTwist();
-    Robot::driveBase()->Drive(x * throttle, y * throttle, t, false);
+    Robot::driveBase()->Drive(x * throttle, y * throttle, t, true);
 }
 
 // Make this return true when this Command no longer needs to run execute()

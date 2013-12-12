@@ -291,7 +291,7 @@ AutoCommand::AutoCommand() :
 
     // default movement commands - we'll set driving pattern later
     for (int i = 0; i < MAX_AUTO_STEPS; i++) {
-	m_step[i] = new TimedDrive(0.0, 0.0, 0.0, 0.0);
+	m_step[i] = new TimedDrive(0.0, 0.0, 0.0, 0.0, false);
 	AddSequential(m_step[i]);
     }
 
@@ -326,7 +326,7 @@ void AutoCommand::Initialize()
     GetDashboardSettings();
     DriveStep *pStep = &m_drivePattern[m_pattern].step[0];
     for (int i = 0; i < MAX_AUTO_STEPS; i++) {
-	m_step[i]->Set( pStep->x, pStep->y, pStep->twist, pStep->secs );
+	m_step[i]->Set( pStep->x, pStep->y, pStep->twist, pStep->secs, false );
 	++pStep;
     }
 }
