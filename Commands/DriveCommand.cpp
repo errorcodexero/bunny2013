@@ -40,7 +40,7 @@ void DriveCommand::Execute()
     float throttle = (1.0 - Robot::oi()->GetThrottle())/2.0;
     float x = Robot::oi()->GetX();
     float y = Robot::oi()->GetY();
-    float t = Robot::oi()->GetTwist();
+    float t = Robot::oi()->GetTwist() / 4.0;	// twist needs to be scaled back!
     Robot::driveBase()->Drive(x * throttle, y * throttle, t, true);
 }
 

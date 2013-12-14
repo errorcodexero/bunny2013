@@ -11,6 +11,7 @@
 // and canceled when the robot enters any other mode.
 
 class TimedDrive;
+class SetDriveMode;
 
 #define	MAX_AUTO_SEQ 10		// autonomous mode sequences
 #define MAX_AUTO_STEPS 6	// max steps in each sequence
@@ -42,6 +43,7 @@ public:
     void SaveAutoPreferences();
 
 private:
+    SetDriveMode *m_setDriveMode;
     TimedDrive *m_step[6];
 
     int m_pattern;  // which autonomous mode pattern to run

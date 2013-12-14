@@ -6,6 +6,7 @@
 #include "OI.h"
 #include "AutoCommand.h"
 #include "TimedDrive.h"
+#include "SetDriveMode.h"
 
 // constant strings used for preferences file entries
 static const char AUTO0STEP0X[] = "AUTO0STEP0X";
@@ -288,6 +289,8 @@ AutoCommand::AutoCommand() :
     CommandGroup("AutoCommand")
 {
     // construct subcommands, establish command sequence
+    m_setDriveMode = new SetDriveMode(false);	// assume we want mechanum mode
+    AddSequential(m_setDriveMode);
 
     // default movement commands - we'll set driving pattern later
     for (int i = 0; i < MAX_AUTO_STEPS; i++) {
@@ -314,7 +317,7 @@ AutoCommand::AutoCommand() :
 AutoCommand::~AutoCommand()
 {
     // TBD: This should remove command instances from scheduler
-    // then delete them.  But WPILib doesn't support that.
+    // then delete them.  But WPILib doesn't support that cleanly.
 }
 
 void AutoCommand::Initialize()
