@@ -64,7 +64,7 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_gyro = new RateGyro(1, gyroAnalogChannel);
     lw->AddSensor("DriveBase", "Gyro", m_gyro);
 
-    m_solenoid = new Solenoid(solenoidChannel);
+    m_solenoid = new DoubleSolenoid(solenoidChannel, solenoidChannel+1);
     lw->AddActuator("DriveBase", "Solenoid", m_solenoid);
     
     m_proximityFrontLeft = new AnalogChannel(proximityFrontLeft);
@@ -184,10 +184,10 @@ void DriveBase::setNewMode(enum DriveMode newMode)
 	    break;
 	case INITIAL:
 	case MECHTOTANK_2:
-	    m_solenoid->Set(false);
+	    m_solenoid->Set(DoubleSolenoid::kReverse);
 	    break;
 	case TANKTOMECH_2:
-	    m_solenoid->Set(true);
+	    m_solenoid->Set(DoubleSolenoid::kForward);
 	    break;
     }
     m_driveMode = newMode;
@@ -240,9 +240,9 @@ void DriveBase::Drive( float x, float y, float twist, bool pushy )
 
     driveModeStateMachine();
 	
-    // Reduce the sensitivity to the "twist" control.
-    // Add gyro compensation (adjust the "200" for best PID response).
-    twist -= m_gyro->GetRate() / 200.;
+    // Adjust the sensitivity to the "twist" control.
+    // Add gyro compensation for skew.
+    twist -= m_gyro->GetRate() / 120.;
 
     // limit the twist range to avoid normalization problems
     if (twist < -1.0) twist = -1.0;

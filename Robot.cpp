@@ -42,6 +42,10 @@ void Robot::RobotInit()
 				 PROXIMITY_RIGHT_FRONT, PROXIMITY_RIGHT_REAR,
 				 PROXIMITY_LEFT_FRONT, PROXIMITY_LEFT_REAR );
 
+    m_pusher = new Solenoid( BALL_PUSHER );
+    m_dropper = new Solenoid( BUNNY_DROPPER );
+    m_launcher = new Solenoid( BUNNY_LAUNCHER );
+
     // commands
 
     m_autonomousCommand = new AutoCommand();

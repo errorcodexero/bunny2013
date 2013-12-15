@@ -40,8 +40,12 @@ void DriveCommand::Execute()
     float throttle = (1.0 - Robot::oi()->GetThrottle())/2.0;
     float x = Robot::oi()->GetX();
     float y = Robot::oi()->GetY();
-    float t = Robot::oi()->GetTwist() / 4.0;	// twist needs to be scaled back!
+    float t = Robot::oi()->GetTwist();
     Robot::driveBase()->Drive(x * throttle, y * throttle, t, true);
+
+    Robot::pusher()->Set(Robot::oi()->GetButtonY());
+    Robot::dropper()->Set(Robot::oi()->GetButtonX());
+    Robot::launcher()->Set(Robot::oi()->GetButtonB());
 }
 
 // Make this return true when this Command no longer needs to run execute()

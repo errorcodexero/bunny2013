@@ -116,6 +116,7 @@ public:
     DriverStation *GetDS() { return m_pDS; }
     DriverStationEnhancedIO* GetEIO() { return m_pEIO; }
     DriverStationLCD* GetLCD() { return m_pLCD; }
+
     float GetX() { return m_pStick->GetRawAxis( 1 ); } 
     // Windows joysticks return y = -1.0 when pushed forward.
     // We prefer to think of forward motion as y = +1.0
@@ -128,5 +129,10 @@ public:
 
     bool MechanumMode() { return m_pGamepadStart->Get(); }
     bool TankMode()     { return m_pGamepadBack->Get(); }
+
+    bool GetButtonA() { return m_pGamepadButtonA->Get(); }
+    bool GetButtonB() { return m_pGamepadButtonB->Get(); }
+    bool GetButtonX() { return m_pGamepadButtonX->Get(); }
+    bool GetButtonY() { return m_pGamepadButtonY->Get(); }
 }; 
 #endif

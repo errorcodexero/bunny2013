@@ -13,7 +13,7 @@
 #define TRANSITIONTIME	500000UL	// 1/2 second, 
 #define	PRETTYCLOSE	1.1		// about 3/4 meter
 #define	TOOCLOSE	1.8		// about 1/4 meter
-#define	BACKOFF		0.16		// speed to back away from obstacle
+#define	BACKOFF		0.20		// speed to back away from obstacle
 
 // robot drive base with four-wheel mecanum drive
 
@@ -25,7 +25,7 @@ private:
 	SpeedController * m_back_right;
 	RobotDrive * m_drive;
 	RateGyro * m_gyro;
-	Solenoid * m_solenoid;
+	DoubleSolenoid * m_solenoid;
 	AnalogChannel *m_proximityFrontLeft;
 	AnalogChannel *m_proximityFrontRight;
 	AnalogChannel *m_proximityRightFront;
