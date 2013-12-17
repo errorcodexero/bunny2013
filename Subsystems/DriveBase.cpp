@@ -270,8 +270,10 @@ bool DriveBase::Drive( float x, float y, float twist, bool pushy )
 	    }
 	    if (y > -backoff) y = -backoff;
 #else
-	    if (y > 0) y = 0;
-	    blocked = true;
+	    if (y > 0) {
+		y = 0;
+		blocked = true;
+	    }
 #endif
 	}
 
@@ -286,8 +288,10 @@ bool DriveBase::Drive( float x, float y, float twist, bool pushy )
 	    }
 	    if (y > -backoff) y = -backoff;
 #else
-	    if (y > 0) y = 0;
-	    blocked = true;
+	    if (y > 0) {
+		y = 0;
+		blocked = true;
+	    }
 #endif
 	}
 
@@ -349,7 +353,7 @@ bool DriveBase::Drive( float x, float y, float twist, bool pushy )
     if (!m_started) Start();
     m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );
 
-    return blocked;
+    return !blocked;
 }
 
 

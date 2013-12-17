@@ -42,7 +42,7 @@ void TimedDrive::Set( double x, double y, double t, double seconds, bool pushy )
 // Called repeatedly when this Command is scheduled to run
 void TimedDrive::Execute()
 {
-    if (Robot::driveBase()->Drive(m_x, m_y, m_t, m_pushy)) {
+    if (!Robot::driveBase()->Drive(m_x, m_y, m_t, m_pushy)) {
 	// we hit something!
 	m_finished = true;
     }
@@ -51,12 +51,9 @@ void TimedDrive::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool TimedDrive::IsFinished()
 {
-    if (!m_finished) {
-	bool timeout = ((Timer::GetFPGATimestamp() - m_startTime) >= m_time);
-	if (timeout) {
-	    printf("TimedDrive::IsFinished\n");
-	    m_finished = true;
-	}
+    if ((Timer::GetFPGATimestamp() - m_startTime) >= m_time) {
+	printf("TimedDrive::IsFinished\n");
+	m_finished = true;
     }
     return m_finished;
 }
