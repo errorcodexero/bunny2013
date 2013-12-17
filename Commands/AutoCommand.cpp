@@ -7,6 +7,7 @@
 #include "AutoCommand.h"
 #include "TimedDrive.h"
 #include "SetDriveMode.h"
+#include "Deploy.h"
 
 // constant strings used for preferences file entries
 static const char AUTO0STEP0X[] = "AUTO0STEP0X";
@@ -297,6 +298,12 @@ AutoCommand::AutoCommand() :
 	m_step[i] = new TimedDrive(0.0, 0.0, 0.0, 0.0, false);
 	AddSequential(m_step[i]);
     }
+
+    m_dropper = new DeployBunny( Robot::dropper() );
+    AddParallel(m_dropper);
+
+    m_launcher = new DeployBunny( Robot::launcher() );
+    AddParallel(m_launcher);
 
     // get initial driving parameters
     GetAutoPreferences();

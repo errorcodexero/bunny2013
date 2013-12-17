@@ -69,7 +69,7 @@ public:
 
 	void Stop();
 	void Start();
-	void Drive( float x, float y, float twist, bool pushy = false );
+	bool Drive( float x, float y, float twist, bool pushy = false );
 	bool SetDriveMode(bool tankMode);
 };
 

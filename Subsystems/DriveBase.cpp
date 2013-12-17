@@ -224,7 +224,7 @@ void DriveBase::driveModeStateMachine()
     }
 }
 
-void DriveBase::Drive( float x, float y, float twist, bool pushy )
+bool DriveBase::Drive( float x, float y, float twist, bool pushy )
 {
 
 #if 0
@@ -253,12 +253,15 @@ void DriveBase::Drive( float x, float y, float twist, bool pushy )
 	x = 0.0;
     }
 
+    bool blocked = false;
+
     if (!pushy) {
 	// collision avoidance
 	float v;
 	
 	v = m_proximityFrontLeft->GetVoltage();
 	if (v > PRETTYCLOSE) {
+#if 0
 	    float backoff;
 	    if (v > TOOCLOSE) {
 		backoff = BACKOFF;
@@ -266,10 +269,15 @@ void DriveBase::Drive( float x, float y, float twist, bool pushy )
 		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
 	    }
 	    if (y > -backoff) y = -backoff;
+#else
+	    if (y > 0) y = 0;
+	    blocked = true;
+#endif
 	}
 
 	v = m_proximityFrontRight->GetVoltage();
 	if (v > PRETTYCLOSE) {
+#if 0
 	    float backoff;
 	    if (v > TOOCLOSE) {
 		backoff = BACKOFF;
@@ -277,6 +285,10 @@ void DriveBase::Drive( float x, float y, float twist, bool pushy )
 		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
 	    }
 	    if (y > -backoff) y = -backoff;
+#else
+	    if (y > 0) y = 0;
+	    blocked = true;
+#endif
 	}
 
 	v = m_proximityLeftFront->GetVoltage();
@@ -336,6 +348,8 @@ void DriveBase::Drive( float x, float y, float twist, bool pushy )
 
     if (!m_started) Start();
     m_drive->MecanumDrive_Cartesian( x, -y, twist, 0.0 );
+
+    return blocked;
 }
 
 

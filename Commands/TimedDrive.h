@@ -11,6 +11,7 @@ private:
     double m_x, m_y, m_t, m_time;
     double m_startTime;
     bool m_pushy;
+    bool m_finished;
 public:
     TimedDrive( double x = 0.0, double y = 0.0, double t = 0.0,
     		double seconds = 0, bool pushy = true );

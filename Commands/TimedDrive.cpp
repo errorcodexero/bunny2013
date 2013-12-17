@@ -17,6 +17,7 @@ TimedDrive::TimedDrive( double x, double y, double t, double seconds, bool pushy
     m_time = seconds;
     m_startTime = 0.0;
     m_pushy = pushy;
+    m_finished = false;
 }
 
 // Called just before this Command runs the first time
@@ -24,6 +25,7 @@ void TimedDrive::Initialize()
 {
     printf("TimedDrive::Initialize\n");
     m_startTime = Timer::GetFPGATimestamp();
+    m_finished = false;
 }
 
 // Call this while running to update the speed, direction or time to run.
@@ -40,15 +42,23 @@ void TimedDrive::Set( double x, double y, double t, double seconds, bool pushy )
 // Called repeatedly when this Command is scheduled to run
 void TimedDrive::Execute()
 {
-    Robot::driveBase()->Drive(m_x, m_y, m_t, m_pushy);
+    if (Robot::driveBase()->Drive(m_x, m_y, m_t, m_pushy)) {
+	// we hit something!
+	m_finished = true;
+    }
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool TimedDrive::IsFinished()
 {
-    bool finished = ((Timer::GetFPGATimestamp() - m_startTime) >= m_time);
-    if (finished) printf("TimedDrive::IsFinished\n");
-    return finished;
+    if (!m_finished) {
+	bool timeout = ((Timer::GetFPGATimestamp() - m_startTime) >= m_time);
+	if (timeout) {
+	    printf("TimedDrive::IsFinished\n");
+	    m_finished = true;
+	}
+    }
+    return m_finished;
 }
 
 // Called once after isFinished returns true
