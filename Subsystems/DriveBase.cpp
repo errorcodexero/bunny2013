@@ -259,40 +259,13 @@ bool DriveBase::Drive( float x, float y, float twist, bool pushy )
 	// collision avoidance
 	float v;
 	
-	v = m_proximityFrontLeft->GetVoltage();
-	if (v > PRETTYCLOSE) {
-#if 0
-	    float backoff;
-	    if (v > TOOCLOSE) {
-		backoff = BACKOFF;
-	    } else {
-		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
-	    }
-	    if (y > -backoff) y = -backoff;
-#else
+	if (m_proximityFrontLeft->GetVoltage() > TOOCLOSE ||
+	    m_proximityFrontRight->GetVoltage() > TOOCLOSE)
+	{
 	    if (y > 0) {
 		y = 0;
 		blocked = true;
 	    }
-#endif
-	}
-
-	v = m_proximityFrontRight->GetVoltage();
-	if (v > PRETTYCLOSE) {
-#if 0
-	    float backoff;
-	    if (v > TOOCLOSE) {
-		backoff = BACKOFF;
-	    } else {
-		backoff = BACKOFF * (v - PRETTYCLOSE) / (TOOCLOSE - PRETTYCLOSE);
-	    }
-	    if (y > -backoff) y = -backoff;
-#else
-	    if (y > 0) {
-		y = 0;
-		blocked = true;
-	    }
-#endif
 	}
 
 	v = m_proximityLeftFront->GetVoltage();
