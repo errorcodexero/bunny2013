@@ -6,6 +6,8 @@
 
 #include <Commands/Command.h>
 
+class Solenoid;
+
 class DeployBunny: public Command {
 private:
     Solenoid *m_actuator;

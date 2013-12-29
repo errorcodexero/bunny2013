@@ -23,11 +23,7 @@ OI::OI()
     m_pGamepadBack        = new JoystickButton(m_pStick, 7);
     m_pGamepadStart       = new JoystickButton(m_pStick, 8);
 
-#ifdef PRACTICE_OI
     m_pAutoSelect         = new DSAnalogInput(m_pEIO, 1);
-#else // COMPETITION_OI
-    m_pAutoSelect         = new DSAnalogInput(m_pEIO, 5);
-#endif
 
     // digital inputs
 
