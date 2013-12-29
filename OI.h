@@ -9,8 +9,6 @@ class OI;
 #include <WPILib.h>
 #include "Robot.h"
 
-#define PRACTICE_OI
-
 class DSAnalogInput {
 private:
     DriverStationEnhancedIO *m_pEIO;
