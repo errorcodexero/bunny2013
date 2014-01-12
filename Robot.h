@@ -12,6 +12,7 @@ class Robot;
 class DriveBase;
 class RateGyro;
 class Solenoid;
+class Relay;
 
 // Commands
 class AutoCommand;
@@ -46,21 +47,14 @@ class OI;
 ////////////////////////////////////////////////////////////////////
 // Relay (Spike) Outputs:
 // 1 - compressor
+// 2 - drive mode
 
 #define	RELAY_COMPRESSOR		1
+#define RELAY_DRIVE_MODE		2
 
 ////////////////////////////////////////////////////////////////////
 // Solenoid Outputs:
-// 1 - drive mode
-//     activate for mecanum drive
-//     deactivate for tank drive
 
-#define	DRIVE_MODE			1	// forward channel
-//      NOT_DRIVE_MODE			2	// reverse channel
-
-#define BALL_PUSHER			3
-#define	BUNNY_DROPPER			4
-#define	BUNNY_LAUNCHER			5
 
 ////////////////////////////////////////////////////////////////////
 // PWM Outputs:
@@ -113,14 +107,9 @@ private:
 
     // global sensors
     Compressor* m_compressor;
-
+	
     // subsystems
     DriveBase* m_driveBase;
-
-    // hack - these should be (part of) subsystems
-    Solenoid* m_pusher;
-    Solenoid* m_dropper;
-    Solenoid* m_launcher;
 
 public:
     // commands
@@ -133,9 +122,6 @@ public:
     // convenience accessors
     static DriveBase* driveBase() { return theRobot().m_driveBase; };
     static OI* oi() { return theRobot().m_oi; };
-    static Solenoid* pusher() { return theRobot().m_pusher; };
-    static Solenoid* dropper() { return theRobot().m_dropper; };
-    static Solenoid* launcher() { return theRobot().m_launcher; };
 
     void Cancel();
     virtual void RobotInit();

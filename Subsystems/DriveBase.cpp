@@ -20,7 +20,7 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
 		      int frontRightMotorChannel,
 		      int backRightMotorChannel,
 		      int gyroAnalogChannel,
-		      int solenoidChannel,
+		      int relayChannel,
 		      int proximityFrontLeft,
 		      int proximityFrontRight,
 		      int proximityRightFront,
@@ -34,7 +34,7 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_back_right(NULL),
     m_drive(NULL),
     m_gyro(NULL),
-    m_solenoid(NULL),
+    m_gearshift(NULL),
     m_proximityFrontLeft(NULL),
     m_proximityFrontRight(NULL),
     m_proximityRightFront(NULL),
@@ -64,8 +64,8 @@ DriveBase::DriveBase( int frontLeftMotorChannel,
     m_gyro = new RateGyro(1, gyroAnalogChannel);
     lw->AddSensor("DriveBase", "Gyro", m_gyro);
 
-    m_solenoid = new DoubleSolenoid(solenoidChannel, solenoidChannel+1);
-    lw->AddActuator("DriveBase", "Solenoid", m_solenoid);
+    m_gearshift = new Relay(relayChannel, Relay::kBothDirections);
+    lw->AddActuator("DriveBase", "Relay", m_gearshift);
     
     m_proximityFrontLeft = new AnalogChannel(proximityFrontLeft);
     lw->AddSensor("DriveBase", "ProximityFrontLeft", m_proximityFrontLeft);
@@ -93,7 +93,7 @@ DriveBase::~DriveBase()
 
     Stop();
     
-    delete m_solenoid;
+    delete m_gearshift;
     delete m_gyro;
     delete m_drive;
     delete m_back_right;
@@ -184,10 +184,10 @@ void DriveBase::setNewMode(enum DriveMode newMode)
 	    break;
 	case INITIAL:
 	case MECHTOTANK_2:
-	    m_solenoid->Set(DoubleSolenoid::kReverse);
+	    m_gearshift->Set(Relay::kForward);
 	    break;
 	case TANKTOMECH_2:
-	    m_solenoid->Set(DoubleSolenoid::kForward);
+	    m_gearshift->Set(Relay::kReverse);
 	    break;
     }
     m_driveMode = newMode;

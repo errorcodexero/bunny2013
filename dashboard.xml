@@ -106,33 +106,83 @@
 	</widget>
 </dashboard>
 <live-window>
-	<widget field="Compressor" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="PressureSwitch" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+	<widget field="DriveBase" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="Gyro" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
 			<location x="6" y="16"/>
 			<height>20</height>
-			<width>167</width>
+			<width>293</width>
 		</widget>
-		<widget field="CompressorRelay" type="Relay" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+		<widget field="FrontLeft" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
 			<location x="6" y="36"/>
-			<height>20</height>
-			<width>167</width>
+			<height>47</height>
+			<width>293</width>
 		</widget>
-		<location x="7" y="48"/>
-		<width>179</width>
-		<height>63</height>
+		<widget field="BackLeft" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="83"/>
+			<height>47</height>
+			<width>293</width>
+		</widget>
+		<widget field="FrontRight" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="130"/>
+			<height>47</height>
+			<width>293</width>
+		</widget>
+		<widget field="BackRight" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="177"/>
+			<height>47</height>
+			<width>293</width>
+		</widget>
+		<widget field="Solenoid" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="224"/>
+			<height>22</height>
+			<width>293</width>
+		</widget>
+		<widget field="ProximityFrontLeft" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="246"/>
+			<height>20</height>
+			<width>293</width>
+		</widget>
+		<widget field="ProximityFrontRight" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="266"/>
+			<height>20</height>
+			<width>293</width>
+		</widget>
+		<widget field="ProximityRightFront" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="286"/>
+			<height>20</height>
+			<width>293</width>
+		</widget>
+		<widget field="ProximityRightRear" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="306"/>
+			<height>20</height>
+			<width>293</width>
+		</widget>
+		<widget field="ProximityLeftFront" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="326"/>
+			<height>20</height>
+			<width>293</width>
+		</widget>
+		<widget field="ProximityLeftRear" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="346"/>
+			<height>20</height>
+			<width>293</width>
+		</widget>
+		<location x="252" y="5"/>
+		<width>305</width>
+		<height>367</height>
 	</widget>
 	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Solenoid[1,5]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+		<widget field="Solenoid[1,5]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
 			<location x="6" y="16"/>
 			<height>23</height>
 			<width>123</width>
 		</widget>
-		<widget field="Solenoid[1,3]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+		<widget field="Solenoid[1,3]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
 			<location x="6" y="39"/>
 			<height>23</height>
 			<width>123</width>
 		</widget>
-		<widget field="Solenoid[1,4]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+		<widget field="Solenoid[1,4]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
 			<location x="6" y="62"/>
 			<height>23</height>
 			<width>123</width>
@@ -141,75 +191,25 @@
 		<width>135</width>
 		<height>92</height>
 	</widget>
-	<widget field="DriveBase" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Gyro" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+	<widget field="Compressor" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="PressureSwitch" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
 			<location x="6" y="16"/>
 			<height>20</height>
-			<width>293</width>
+			<width>167</width>
 		</widget>
-		<widget field="FrontLeft" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+		<widget field="CompressorRelay" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
 			<location x="6" y="36"/>
-			<height>46</height>
-			<width>293</width>
+			<height>22</height>
+			<width>167</width>
 		</widget>
-		<widget field="BackLeft" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="82"/>
-			<height>46</height>
-			<width>293</width>
-		</widget>
-		<widget field="FrontRight" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="128"/>
-			<height>46</height>
-			<width>293</width>
-		</widget>
-		<widget field="BackRight" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="174"/>
-			<height>46</height>
-			<width>293</width>
-		</widget>
-		<widget field="Solenoid" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
-			<location x="6" y="220"/>
-			<height>20</height>
-			<width>293</width>
-		</widget>
-		<widget field="ProximityFrontLeft" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="240"/>
-			<height>20</height>
-			<width>293</width>
-		</widget>
-		<widget field="ProximityFrontRight" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="260"/>
-			<height>20</height>
-			<width>293</width>
-		</widget>
-		<widget field="ProximityRightFront" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="280"/>
-			<height>20</height>
-			<width>293</width>
-		</widget>
-		<widget field="ProximityRightRear" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="300"/>
-			<height>20</height>
-			<width>293</width>
-		</widget>
-		<widget field="ProximityLeftFront" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="320"/>
-			<height>20</height>
-			<width>293</width>
-		</widget>
-		<widget field="ProximityLeftRear" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
-			<location x="6" y="340"/>
-			<height>20</height>
-			<width>293</width>
-		</widget>
-		<location x="252" y="5"/>
-		<width>305</width>
-		<height>367</height>
+		<location x="7" y="48"/>
+		<width>179</width>
+		<height>63</height>
 	</widget>
 	<widget field="DriverStation" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Battery" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+		<widget field="Battery" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
 			<location x="6" y="16"/>
-			<height>20</height>
+			<height>21</height>
 			<width>100</width>
 		</widget>
 		<location x="7" y="5"/>

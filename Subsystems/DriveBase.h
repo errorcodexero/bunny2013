@@ -25,7 +25,7 @@ private:
 	SpeedController * m_back_right;
 	RobotDrive * m_drive;
 	RateGyro * m_gyro;
-	DoubleSolenoid * m_solenoid;
+	Relay * m_gearshift;
 	AnalogChannel *m_proximityFrontLeft;
 	AnalogChannel *m_proximityFrontRight;
 	AnalogChannel *m_proximityRightFront;
@@ -55,7 +55,7 @@ public:
 		   int frontRightMotorChannel,
 		   int backRightMotorChannel,
 		   int gyroAnalogChannel, 
-		   int solenoidChannel,
+		   int relayChannel,
 		   int proximityFrontLeft,
 		   int proximityFrontRight,
 		   int proximityRightFront,

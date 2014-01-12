@@ -12,7 +12,6 @@
 
 class TimedDrive;
 class SetDriveMode;
-class DeployBunny;
 
 #define	MAX_AUTO_SEQ 10		// autonomous mode sequences
 #define MAX_AUTO_STEPS 6	// max steps in each sequence
@@ -46,8 +45,6 @@ public:
 private:
     SetDriveMode *m_setDriveMode;
     TimedDrive *m_step[6];
-    DeployBunny *m_dropper;
-    DeployBunny *m_launcher;
 
     int m_pattern;  // which autonomous mode pattern to run
     struct DrivePattern m_drivePattern[MAX_AUTO_SEQ];
